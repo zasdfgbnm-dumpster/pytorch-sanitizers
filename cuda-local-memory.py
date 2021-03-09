@@ -3,6 +3,7 @@ import asyncio
 import multiprocessing
 import json
 import colorama
+import sys
 
 colorama.init()
 
@@ -57,3 +58,6 @@ asyncio.run(main())
 
 with open('local-memory-usage.json', 'w') as f:
     json.dump(errors, f)
+
+if len(errors) > 0:
+    sys.exit(1)
