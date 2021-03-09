@@ -6,7 +6,7 @@ import json
 
 ncpus = multiprocessing.cpu_count()
 
-files = glob.glob('pytorch/aten/src/ATen/native/cuda/*.cu')
+files = set(glob.glob('pytorch/aten/src/ATen/native/cuda/*.cu'))
 
 nvcc = 'nvcc'
 target = ['-dc', '-o', '/dev/null']
@@ -28,14 +28,17 @@ async def run_single(file):
     _, stderr = await proc.communicate()
     stderr = stderr.decode()
     if proc.returncode != 0:
+        print('Problem detected:', file)
         errors[file] = stderr
 
 
 async def main():
     tasks = set()
-    for f in tqdm.tqdm(files):
+    while len(files) > 0:
         if len(tasks) < ncpus:
+            f = next(iter(files))
             tasks.add(asyncio.create_task(run_single(f)))
+            files.remove(f)
         else:
             for t in tasks:
                 if t.done():
