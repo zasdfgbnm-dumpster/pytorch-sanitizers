@@ -1,9 +1,9 @@
 import glob
 import asyncio
 import multiprocessing
+import tqdm
 
 ncpus = multiprocessing.cpu_count()
-print(ncpus)
 
 files = glob.glob('pytorch/aten/src/ATen/native/cuda/*.cu')
 
@@ -15,6 +15,8 @@ defs = ['-D__CUDA_NO_HALF_OPERATORS__']
 includes = ['-Ipytorch', '-Ipytorch/aten/src/', '-Ipytorch/build', '-Ipytorch/build/aten/src', '-Ipytorch/build/caffe2/aten/src']
 flags = [*target, *sanitize, *features, *defs, *includes]
 
+errors = []
+
 
 async def run_single(file):
     command = ' '.join([nvcc, file, *flags])
@@ -25,12 +27,12 @@ async def run_single(file):
     _, stderr = await proc.communicate()
     stderr = stderr.decode()
     if proc.returncode != 0:
-        print(stderr)
+        errors.append(stderr)
 
 
 async def main():
     tasks = set()
-    for f in files:
+    for f in tqdm.tqdm(files):
         if len(tasks) < ncpus:
             tasks.add(asyncio.create_task(run_single(f)))
         else:
