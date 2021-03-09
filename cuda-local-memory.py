@@ -1,8 +1,10 @@
 import glob
 import asyncio
 import multiprocessing
-import tqdm
 import json
+import colorama
+
+colorama.init()
 
 ncpus = multiprocessing.cpu_count()
 
@@ -28,8 +30,10 @@ async def run_single(file):
     _, stderr = await proc.communicate()
     stderr = stderr.decode()
     if proc.returncode != 0:
-        print('Problem detected:', file)
+        print(colorama.Fore.RED + 'FAIL:', file)
         errors[file] = stderr
+    else:
+        print(colorama.Fore.GREEN + 'PASS:', file)
 
 
 async def main():
