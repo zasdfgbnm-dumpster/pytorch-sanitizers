@@ -2,6 +2,7 @@ import glob
 import asyncio
 import multiprocessing
 import tqdm
+import json
 
 ncpus = multiprocessing.cpu_count()
 
@@ -15,7 +16,7 @@ defs = ['-D__CUDA_NO_HALF_OPERATORS__']
 includes = ['-Ipytorch', '-Ipytorch/aten/src/', '-Ipytorch/build', '-Ipytorch/build/aten/src', '-Ipytorch/build/caffe2/aten/src']
 flags = [*target, *sanitize, *features, *defs, *includes]
 
-errors = []
+errors = {}
 
 
 async def run_single(file):
@@ -27,7 +28,7 @@ async def run_single(file):
     _, stderr = await proc.communicate()
     stderr = stderr.decode()
     if proc.returncode != 0:
-        errors.append(stderr)
+        errors[file] = stderr
 
 
 async def main():
@@ -46,3 +47,6 @@ async def main():
 
 
 asyncio.run(main())
+
+with open('local-memory-usage.json', 'w') as f:
+    json.dump(errors, f)
