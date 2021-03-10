@@ -4,6 +4,7 @@ import multiprocessing
 import json
 import colorama
 import sys
+import os
 
 colorama.init()
 
@@ -18,6 +19,8 @@ features = ['--extended-lambda', '--expt-relaxed-constexpr']
 archs = ['-gencode', 'arch=compute_70,code=sm_70']
 defs = ['-DCUDA_HAS_FP16=1', '-D__CUDA_NO_HALF_OPERATORS__', '-D__CUDA_NO_HALF_CONVERSIONS__', '-D__CUDA_NO_BFLOAT16_CONVERSIONS__', '-D__CUDA_NO_HALF2_OPERATORS__']
 includes = ['-Ipytorch', '-Ipytorch/aten/src/', '-Ipytorch/build', '-Ipytorch/build/aten/src', '-Ipytorch/build/caffe2/aten/src']
+if not os.path.isdir('/usr/local/cuda/include/cub'):
+    includes.append('-Ipytorch/third_party/cub')
 flags = [*target, *sanitize, *features, *archs, *defs, *includes]
 
 errors = {}

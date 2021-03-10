@@ -13,8 +13,8 @@ for cuda_version, container_version in cuda_to_container_versions.items():
     docker run -it -v $PWD:/w -w /w @(f'{container}:{container_version}') bash -c f'''
         set -eux
         conda create -n env python=3.9 --yes
-        export PATH=/opt/conda/envs/env/bin:$PATH
-        pip install -r requirements.txt
-        python cuda-local-memory.py
+        export PYTHON_PATH=/opt/conda/envs/env/bin
+        $PYTHON_PATH/pip install -r requirements.txt
+        $PYTHON_PATH/python cuda-local-memory.py
         mv local-memory-usage.json local-memory-usage-{cuda_version}.json
     '''
