@@ -1,0 +1,28 @@
+AdaptiveAveragePooling.cu	__cuda_sm3x_div_rn_noftz_f32
+DistanceKernel.cu	__cuda_sm3x_div_rn_noftz_f32
+MultinomialKernel.cu	__cuda_sm3x_div_rn_noftz_f32
+NaiveConvolutionTranspose2d.cu	void at::native::col2im_kernel<float, float>(long, float const*, long, long, long, long, long, long, long, long, long, long, long, long, long, float*)
+ForeachBinaryOpScalarList.cu	__cuda_sm3x_div_rn_noftz_f32
+UpSampleBicubic2d.cu	void at::native::(anonymous namespace)::upsample_bicubic2d_backward_out_frame<double, double>(int, double, double, bool, at::GenericPackedTensorAccessor<double, 4ul, at::DefaultPtrTraits, long>, at::GenericPackedTensorAccessor<double, 4ul, at::DefaultPtrTraits, long>)
+UpSampleBicubic2d.cu	void at::native::(anonymous namespace)::upsample_bicubic2d_out_frame<double, double>(int, double, double, bool, at::GenericPackedTensorAccessor<double, 4ul, at::DefaultPtrTraits, long>, at::GenericPackedTensorAccessor<double, 4ul, at::DefaultPtrTraits, long>)
+NaiveConvolutionTranspose2d.cu	void at::native::col2im_kernel<double, double>(long, double const*, long, long, long, long, long, long, long, long, long, long, long, long, long, double*)
+FractionalMaxPool2d.cu	__cuda_sm3x_div_rn_noftz_f32
+UnaryFractionKernels.cu	__cuda_sm3x_div_rn_noftz_f32
+BinaryMiscBackwardOpsKernels.cu	__cuda_sm3x_div_rn_noftz_f32
+AdaptiveAveragePooling3d.cu	__cuda_sm3x_div_rn_noftz_f32
+NaiveDilatedConvolution.cu	void at::native::col2im_kernel<c10::Half, c10::Half>(long, c10::Half const*, long, long, long, long, long, long, long, long, long, long, long, long, long, c10::Half*)
+NaiveDilatedConvolution.cu	void at::native::col2im_kernel<c10::BFloat16, c10::BFloat16>(long, c10::BFloat16 const*, long, long, long, long, long, long, long, long, long, long, long, long, long, c10::BFloat16*)
+NaiveConvolutionTranspose2d.cu	void at::native::col2im_kernel<c10::BFloat16, float>(long, c10::BFloat16 const*, long, long, long, long, long, long, long, long, long, long, long, long, long, c10::BFloat16*)
+NaiveDilatedConvolution.cu	void at::native::col2im_kernel<float, float>(long, float const*, long, long, long, long, long, long, long, long, long, long, long, long, long, float*)
+AdaptiveMaxPooling3d.cu	__cuda_sm3x_div_rn_noftz_f32
+DistributionExponentialKernel.cu	__cuda_sm3x_div_rn_noftz_f32
+DistributionCauchyKernel.cu	__internal_trig_reduction_slowpathd
+AveragePool2d.cu	__cuda_sm3x_div_rn_noftz_f32
+NaiveConvolutionTranspose2d.cu	void at::native::col2im_kernel<c10::Half, float>(long, c10::Half const*, long, long, long, long, long, long, long, long, long, long, long, long, long, c10::Half*)
+BinaryMiscOpsKernels.cu	__cuda_sm3x_div_rn_noftz_f32
+FractionalMaxPool3d.cu	__cuda_sm3x_div_rn_noftz_f32
+NaiveDilatedConvolution.cu	void at::native::col2im_kernel<double, double>(long, double const*, long, long, long, long, long, long, long, long, long, long, long, long, long, double*)
+ForeachBinaryOpList.cu	__cuda_sm3x_div_rn_noftz_f32
+AdaptiveMaxPooling2d.cu	__cuda_sm3x_div_rn_noftz_f32
+AveragePool3d.cu	__cuda_sm3x_div_rn_noftz_f32
+BinaryShiftOpsKernels.cu	__cuda_sm3x_div_rn_noftz_f32
