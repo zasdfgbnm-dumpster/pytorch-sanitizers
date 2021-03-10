@@ -30,6 +30,12 @@ def is_local_memory_error(text):
     return True
 
 
+def get_function_name(error):
+    error = error.split("'")
+    assert len(error) == 3
+    return error[1]
+
+
 async def run_single(file):
     command = ' '.join([nvcc, file, *flags])
     proc = await asyncio.create_subprocess_shell(
@@ -40,7 +46,7 @@ async def run_single(file):
     stderr = stderr.decode()
     if proc.returncode != 0:
         stderr = stderr.split('\n')
-        stderr = [e for e in stderr if is_local_memory_error(e)]
+        stderr = [get_function_name(e) for e in stderr if is_local_memory_error(e)]
         if len(stderr) > 0:
             print(colorama.Fore.RED + 'FAIL:', file)
             errors[file] = stderr
