@@ -15,6 +15,6 @@ for cuda_version, container_version in cuda_to_container_versions.items():
         conda create -n env python=3.9 --yes
         export PYTHON_PATH=/opt/conda/envs/env/bin
         $PYTHON_PATH/pip install -r requirements.txt
-        $PYTHON_PATH/python cuda-local-memory.py
+        $PYTHON_PATH/python cuda-local-memory.py || true
         mv local-memory-usage.json local-memory-usage-{cuda_version}.json
     '''
