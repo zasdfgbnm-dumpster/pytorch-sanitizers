@@ -22,6 +22,14 @@ flags = [*target, *sanitize, *features, *defs, *includes]
 errors = {}
 
 
+def is_local_memory_error(text):
+    if not text.startswith('ptxas error'):
+        return False
+    if 'Local memory' not in text and 'local memory' not in text:
+        return False
+    return True
+
+
 async def run_single(file):
     command = ' '.join([nvcc, file, *flags])
     proc = await asyncio.create_subprocess_shell(
@@ -31,8 +39,13 @@ async def run_single(file):
     _, stderr = await proc.communicate()
     stderr = stderr.decode()
     if proc.returncode != 0:
-        print(colorama.Fore.RED + 'FAIL:', file)
-        errors[file] = stderr
+        stderr = stderr.split('\n')
+        stderr = [e for e in stderr if is_local_memory_error(e)]
+        if len(stderr) > 0:
+            print(colorama.Fore.RED + 'FAIL:', file)
+            errors[file] = stderr
+        else:
+            print(colorama.Fore.MAGENTA + 'UNKNOWN:', file)
     else:
         print(colorama.Fore.GREEN + 'PASS:', file)
 
