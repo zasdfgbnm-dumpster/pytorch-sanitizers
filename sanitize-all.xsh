@@ -10,14 +10,8 @@ cuda_to_container_versions = {
 
 for cuda_version, container_version in cuda_to_container_versions.items():
     print('Running for CUDA:', cuda_version)
-    docker run -it -v $PWD:/w @(f'{container}:{container_version}') bash -c f'''
+    docker run -it -v $PWD:/w -w /w @(f'{container}:{container_version}') bash -c f'''
         set -eux
-        cd /w
-        pushd pytorch
-        pip install dataclasses
-        python setup.py clean
-        python setup.py install
-        popd
         conda create -n env python=3.9 --yes
         export PATH=/opt/conda/envs/env/bin:$PATH
         pip install -r requirements.txt
