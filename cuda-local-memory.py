@@ -16,7 +16,7 @@ target = ['-dc', '-o', '/dev/null']
 sanitize = ['-Xptxas=-Werror', '-Xptxas=-warn-lmem-usage,-warn-spills']
 features = ['--extended-lambda', '--expt-relaxed-constexpr']
 archs = ['-gencode', 'arch=compute_70,code=sm_70']
-defs = ['-D__CUDA_NO_HALF_OPERATORS__']
+defs = ['-DCUDA_HAS_FP16=1', '-D__CUDA_NO_HALF_OPERATORS__', '-D__CUDA_NO_HALF_CONVERSIONS__', '-D__CUDA_NO_BFLOAT16_CONVERSIONS__', '-D__CUDA_NO_HALF2_OPERATORS__']
 includes = ['-Ipytorch', '-Ipytorch/aten/src/', '-Ipytorch/build', '-Ipytorch/build/aten/src', '-Ipytorch/build/caffe2/aten/src']
 flags = [*target, *sanitize, *features, *archs, *defs, *includes]
 
@@ -52,15 +52,16 @@ async def run_single(file):
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE)
     _, stderr = await proc.communicate()
-    stderr = stderr.decode()
+    stderr_ = stderr.decode()
     if proc.returncode != 0:
-        stderr = stderr.split('\n')
+        stderr = stderr_.split('\n')
         stderr = [await get_function_name(e) for e in stderr if is_local_memory_error(e)]
         if len(stderr) > 0:
             print(colorama.Fore.RED + 'FAIL:', file)
             errors[file] = stderr
         else:
             print(colorama.Fore.MAGENTA + 'UNKNOWN:', file)
+            print(stderr_)
     else:
         print(colorama.Fore.GREEN + 'PASS:', file)
 
