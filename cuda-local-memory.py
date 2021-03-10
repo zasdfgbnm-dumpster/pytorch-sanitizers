@@ -30,10 +30,18 @@ def is_local_memory_error(text):
     return True
 
 
-def get_function_name(error):
+async def demangle(symbol):
+    proc = await asyncio.create_subprocess_shell(
+        f'c++filt {symbol}',
+        stdout=asyncio.subprocess.PIPE)
+    stdout, _ = await proc.communicate()
+    return stdout.decode()
+
+
+async def get_function_name(error):
     error = error.split("'")
     assert len(error) == 3
-    return error[1]
+    return await demangle(error[1])
 
 
 async def run_single(file):
@@ -46,7 +54,7 @@ async def run_single(file):
     stderr = stderr.decode()
     if proc.returncode != 0:
         stderr = stderr.split('\n')
-        stderr = [get_function_name(e) for e in stderr if is_local_memory_error(e)]
+        stderr = [await get_function_name(e) for e in stderr if is_local_memory_error(e)]
         if len(stderr) > 0:
             print(colorama.Fore.RED + 'FAIL:', file)
             errors[file] = stderr
