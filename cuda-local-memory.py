@@ -15,9 +15,10 @@ nvcc = 'nvcc'
 target = ['-dc', '-o', '/dev/null']
 sanitize = ['-Xptxas=-Werror', '-Xptxas=-warn-lmem-usage,-warn-spills']
 features = ['--extended-lambda', '--expt-relaxed-constexpr']
+archs = ['-gencode', 'arch=compute_70,code=sm_70']
 defs = ['-D__CUDA_NO_HALF_OPERATORS__']
 includes = ['-Ipytorch', '-Ipytorch/aten/src/', '-Ipytorch/build', '-Ipytorch/build/aten/src', '-Ipytorch/build/caffe2/aten/src']
-flags = [*target, *sanitize, *features, *defs, *includes]
+flags = [*target, *sanitize, *features, *archs, *defs, *includes]
 
 errors = {}
 
