@@ -35,7 +35,7 @@ async def demangle(symbol):
         f'c++filt {symbol}',
         stdout=asyncio.subprocess.PIPE)
     stdout, _ = await proc.communicate()
-    return stdout.decode()
+    return stdout.decode().strip()
 
 
 async def get_function_name(error):
