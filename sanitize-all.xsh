@@ -17,4 +17,5 @@ for cuda_version, container_version in cuda_to_container_versions.items():
         $PYTHON_PATH/pip install -r requirements.txt
         $PYTHON_PATH/python cuda-local-memory.py --demangle || true
         mv local-memory-usage.json local-memory-usage-{cuda_version}.json
+        mv keep keep-{cuda_version}
     '''

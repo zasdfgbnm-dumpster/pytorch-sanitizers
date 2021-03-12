@@ -1,2 +1,9 @@
 .ipynb_checkpoints
-/keep
+/keep*
+*.ii
+*.cubin
+*.gpu
+*.cudafe*
+*.fatbin
+*.ptx
+*.module_id
