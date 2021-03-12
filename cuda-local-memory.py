@@ -108,8 +108,8 @@ def rm_then_mkdir(path):
 async def main():
     tasks = set()
     rm_then_mkdir(keep_dir)
-    while len(files) > 0:
-        if len(tasks) < ncpus:
+    while len(files) > 0 or len(tasks) > 0:
+        if len(files) > 0 and len(tasks) < ncpus:
             f = next(iter(files))
             tasks.add(asyncio.create_task(run_single(f)))
             files.remove(f)
