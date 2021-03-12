@@ -4,6 +4,6 @@
 *.cubin
 *.gpu
 *.cudafe*
-*.fatbin
+*.fatbin*
 *.ptx
 *.module_id
